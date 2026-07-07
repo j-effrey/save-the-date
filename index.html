@@ -17,13 +17,13 @@
 
     .scene {
       position: relative;
-      width: 530px;
-      height: 390px;
+      width: 730px;
+      height: 520px;
     }
 
     .card-std {
       position: absolute;
-      width: 260px;
+      width: 364px;
       left: 0;
       top: 0;
       z-index: 2;
@@ -32,89 +32,28 @@
 
     .card-photo {
       position: absolute;
-      width: 295px;
-      left: 218px;
-      top: 93px;
+      width: 413px;
+      left: 305px;
+      top: 130px;
       z-index: 1;
       transform: rotate(4.5deg);
       transform-origin: center;
       box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
     }
 
-    @media (max-width: 580px) {
-      .scene {
-        width: 330px;
-        height: 242px;
-      }
-      .card-std  { width: 162px; }
-      .card-photo { width: 184px; left: 136px; top: 65px; }
+    @media (max-width: 800px) {
+      .scene      { width: 380px; height: 270px; }
+      .card-std   { width: 189px; }
+      .card-photo { width: 215px; left: 158px; top: 68px; }
     }
 
-    /* ── Option 1: Fade & Rise ─────────────────────────────
-       Both pieces gently fade in while drifting upward;
-       the photo follows the card after a short delay. */
-    body.anim-1 .card-std {
-      animation: fade-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    body.anim-1 .card-photo {
-      animation: fade-rise-rot 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
-    }
-    @keyframes fade-rise {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fade-rise-rot {
-      from { opacity: 0; transform: translateY(28px) rotate(4.5deg); }
-      to   { opacity: 1; transform: translateY(0) rotate(4.5deg); }
-    }
-
-    /* ── Option 2: Placed on the Table ─────────────────────
-       Each piece drops in from above, slightly oversized, and
-       settles down like photos being laid down — photo first,
-       then the card lands on top of it. */
-    body.anim-2 .card-photo {
-      animation: place-photo 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-    }
-    body.anim-2 .card-std {
-      animation: place-card 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) 0.5s both;
-    }
-    @keyframes place-photo {
-      from { opacity: 0; transform: scale(1.18) rotate(9deg); }
-      to   { opacity: 1; transform: scale(1) rotate(4.5deg); }
-    }
-    @keyframes place-card {
-      from { opacity: 0; transform: scale(1.18) rotate(-4deg); }
-      to   { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-
-    /* ── Option 3: Slide Together ──────────────────────────
-       The card glides in from the left and the photo from the
-       right at the same time, meeting in the middle. */
-    body.anim-3 .card-std {
-      animation: slide-left 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    body.anim-3 .card-photo {
-      animation: slide-right 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    @keyframes slide-left {
-      from { opacity: 0; transform: translateX(-90px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes slide-right {
-      from { opacity: 0; transform: translateX(90px) rotate(4.5deg); }
-      to   { opacity: 1; transform: translateX(0) rotate(4.5deg); }
-    }
-
-    /* ── Option 4: Slide Apart ─────────────────────────────
-       Both pieces start stacked in the center of the scene and
-       slide outward to their resting spots — card to the left,
-       photo to the right. */
-    body.anim-4 .card-std {
+    /* Slide Apart */
+    .card-std {
       animation:
         apart-left-move 2.4s cubic-bezier(0.22, 1, 0.36, 1) both,
         apart-fade      0.5s ease-out both;
     }
-    body.anim-4 .card-photo {
+    .card-photo {
       animation:
         apart-right-move 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both,
         apart-fade       0.5s ease-out 0.3s both;
@@ -131,48 +70,12 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-
-    /* TEMPORARY: animation picker — remove once an option is chosen */
-    .anim-picker {
-      position: fixed;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      font-family: sans-serif;
-      font-size: 13px;
-      z-index: 10;
-    }
-    .anim-picker button {
-      padding: 8px 14px;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.85);
-      cursor: pointer;
-    }
-    .anim-picker button:hover { background: #fff; }
   </style>
 </head>
-<body class="anim-1">
+<body>
   <div class="scene">
     <img class="card-std"   src="savethedate.jpg"  alt="Save the Date card">
     <img class="card-photo" src="savethedate2.jpg" alt="Jeffrey and Victoria">
   </div>
-
-  <!-- TEMPORARY: animation picker — remove once an option is chosen -->
-  <div class="anim-picker">
-    <button onclick="playAnim(1)">1 · Fade &amp; Rise</button>
-    <button onclick="playAnim(2)">2 · Placed on Table</button>
-    <button onclick="playAnim(3)">3 · Slide Together</button>
-    <button onclick="playAnim(4)">4 · Slide Apart</button>
-  </div>
-  <script>
-    function playAnim(n) {
-      document.body.className = '';
-      void document.body.offsetWidth; // restart the animation
-      document.body.className = 'anim-' + n;
-    }
-  </script>
 </body>
 </html>
