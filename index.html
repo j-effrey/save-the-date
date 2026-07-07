@@ -158,7 +158,6 @@
         width: 82vw;
         max-width: 340px;
         aspect-ratio: 2400 / 3362;
-        perspective: 1200px;
         cursor: pointer;
         animation: m-place 0.85s cubic-bezier(0.34, 1.25, 0.64, 1) 0.3s both;
       }
@@ -175,11 +174,11 @@
         transform-style: preserve-3d;
         -webkit-transform-style: preserve-3d;
         transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform;
+        transform: perspective(1200px) rotateY(0deg);
       }
 
       .m-flip-inner.is-flipped {
-        transform: rotateY(180deg);
+        transform: perspective(1200px) rotateY(180deg);
       }
 
       .m-front,
@@ -188,6 +187,7 @@
         inset: 0;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
+        transform: translateZ(1px);
       }
 
       .m-front img {
@@ -199,7 +199,7 @@
       }
 
       .m-back {
-        transform: rotateY(180deg);
+        transform: rotateY(180deg) translateZ(1px);
         box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
       }
 
@@ -259,7 +259,7 @@
         text-transform: uppercase;
         color: rgba(0, 0, 0, 0.55);
         transition: opacity 0.5s ease;
-        animation: apart-fade 0.6s ease-out 1.4s both, m-hint-pulse 2.8s ease-in-out 2.2s infinite;
+        animation: apart-fade 0.6s ease-out 1.4s both, m-hint-pulse 2.8s ease-in-out 2.0s infinite;
       }
 
       .m-hint.hidden {
@@ -269,8 +269,8 @@
       }
 
       @keyframes m-hint-pulse {
-        0%, 100% { opacity: 0.4; }
-        50%       { opacity: 0.85; }
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.4; }
       }
     }
   </style>
@@ -287,7 +287,7 @@
     <p class="cal-label">Add to calendar</p>
     <div class="cal-buttons">
       <a class="cal-btn"
-         href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=Sea+Cliff+Manor"
+         href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=395+Prospect+Ave%2C+Sea+Cliff%2C+NY+11579"
          target="_blank" rel="noopener">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
           <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
@@ -298,7 +298,7 @@
         Google
       </a>
       <a class="cal-btn"
-         href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=Sea%20Cliff%20Manor&allday=true"
+         href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=395%20Prospect%20Ave%2C%20Sea%20Cliff%2C%20NY%2011579&allday=true"
          target="_blank" rel="noopener">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
           <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
@@ -335,7 +335,7 @@
             <p class="cal-label">Add to calendar</p>
             <div class="cal-buttons">
               <a class="cal-btn"
-                 href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=Sea+Cliff+Manor"
+                 href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=395+Prospect+Ave%2C+Sea+Cliff%2C+NY+11579"
                  target="_blank" rel="noopener"
                  onclick="event.stopPropagation()">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -347,7 +347,7 @@
                 Google
               </a>
               <a class="cal-btn"
-                 href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=Sea%20Cliff%20Manor&allday=true"
+                 href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=395%20Prospect%20Ave%2C%20Sea%20Cliff%2C%20NY%2011579&allday=true"
                  target="_blank" rel="noopener"
                  onclick="event.stopPropagation()">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -386,9 +386,12 @@
   <script>
     function flipMobileCard() {
       const inner = document.getElementById('mFlipInner');
+      const card  = inner.parentElement;
       const hint  = document.getElementById('mHint');
+      card.style.pointerEvents = 'none';
       inner.classList.toggle('is-flipped');
       hint.classList.toggle('hidden', inner.classList.contains('is-flipped'));
+      setTimeout(() => { card.style.pointerEvents = ''; }, 900);
     }
 
     function downloadICS() {
@@ -400,7 +403,7 @@
         'DTSTART;VALUE=DATE:20270725',
         'DTEND;VALUE=DATE:20270726',
         'SUMMARY:Save the Date — Jeffrey Wong & Victoria Cheng',
-        'LOCATION:Sea Cliff Manor',
+        'LOCATION:395 Prospect Ave\\, Sea Cliff\\, NY 11579',
         'DESCRIPTION:Formal invitation to follow.',
         'END:VEVENT',
         'END:VCALENDAR'
