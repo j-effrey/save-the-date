@@ -8,12 +8,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: url('bg.jpg') center / cover no-repeat;
+      background: url('bg.jpg') center / cover no-repeat fixed;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 48px 24px;
+      gap: 32px;
     }
+
+    /* ── Desktop layout ─────────────────────────────── */
 
     .scene {
       position: relative;
@@ -41,13 +46,13 @@
       box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 800px) and (min-width: 601px) {
       .scene      { width: 380px; height: 270px; }
       .card-std   { width: 189px; }
       .card-photo { width: 215px; left: 158px; top: 68px; }
     }
 
-    /* Slide Apart */
+    /* Slide Apart entrance */
     .card-std {
       animation:
         apart-left-move 2.4s cubic-bezier(0.22, 1, 0.36, 1) both,
@@ -70,12 +75,346 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+
+    /* ── Calendar buttons (shared desktop + mobile back) ── */
+
+    .cal-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: apart-fade 0.8s ease-out 1.5s both;
+    }
+
+    .cal-label {
+      font-family: Georgia, serif;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .cal-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(0, 0, 0, 0.11);
+      border-radius: 999px;
+      font-family: Georgia, serif;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .cal-btn:hover {
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(0, 0, 0, 0.2);
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    /* ── Mobile layout ──────────────────────────────── */
+
+    .m-scene { display: none; }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+        gap: 0;
+        justify-content: center;
+        background-attachment: scroll;
+      }
+
+      .scene,
+      .cal-section { display: none; }
+
+      .m-scene {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100%;
+        gap: 22px;
+        padding: 52px 20px 40px;
+      }
+
+      /* 3D flip card */
+      .m-flip-card {
+        width: 82vw;
+        max-width: 340px;
+        aspect-ratio: 2400 / 3362;
+        perspective: 1200px;
+        cursor: pointer;
+        animation: m-place 0.85s cubic-bezier(0.34, 1.25, 0.64, 1) 0.3s both;
+      }
+
+      @keyframes m-place {
+        from { opacity: 0; transform: scale(1.1) translateY(-18px) rotate(-4deg); }
+        to   { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
+      }
+
+      .m-flip-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+      }
+
+      .m-flip-inner.is-flipped {
+        transform: rotateY(180deg);
+      }
+
+      .m-front,
+      .m-back {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .m-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
+      }
+
+      .m-back {
+        transform: rotateY(180deg);
+        box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
+      }
+
+      .m-back img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Calendar overlay on the blank top portion of cardback.jpg (~46%) */
+      .m-cal-overlay {
+        position: absolute;
+        top: 30%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 9px;
+        padding: 0 20px;
+        z-index: 1;
+      }
+
+      .m-cal-overlay .cal-label {
+        font-size: 9px;
+        font-weight: bold;
+        letter-spacing: 0.3em;
+        color: rgba(0, 0, 0, 0.55);
+        margin-bottom: 2px;
+      }
+
+      .m-cal-overlay .cal-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .m-cal-overlay .cal-btn {
+        width: 158px;
+        justify-content: center;
+        padding: 7px 0;
+        font-size: 10.5px;
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Flip hint */
+      .m-hint {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-family: Georgia, serif;
+        font-size: 10px;
+        font-weight: bold;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        transition: opacity 0.5s ease;
+        animation: apart-fade 0.6s ease-out 1.4s both, m-hint-pulse 2.8s ease-in-out 2.2s infinite;
+      }
+
+      .m-hint.hidden {
+        opacity: 0;
+        pointer-events: none;
+        animation: none;
+      }
+
+      @keyframes m-hint-pulse {
+        0%, 100% { opacity: 0.4; }
+        50%       { opacity: 0.85; }
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Desktop -->
   <div class="scene">
     <img class="card-std"   src="savethedate.jpg"  alt="Save the Date card">
     <img class="card-photo" src="savethedate2.jpg" alt="Jeffrey and Victoria">
   </div>
+
+  <div class="cal-section">
+    <p class="cal-label">Add to calendar</p>
+    <div class="cal-buttons">
+      <a class="cal-btn"
+         href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=Sea+Cliff+Manor"
+         target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>
+        Google
+      </a>
+      <a class="cal-btn"
+         href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=Sea%20Cliff%20Manor&allday=true"
+         target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>
+        Outlook
+      </a>
+      <button class="cal-btn" onclick="downloadICS()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>
+        Apple
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile -->
+  <div class="m-scene">
+    <div class="m-flip-card" onclick="flipMobileCard()">
+      <div class="m-flip-inner" id="mFlipInner">
+
+        <div class="m-front">
+          <img src="savethedate.jpg" alt="Save the Date card">
+        </div>
+
+        <div class="m-back">
+          <img src="cardback.jpg" alt="Jeffrey and Victoria">
+          <div class="m-cal-overlay">
+            <p class="cal-label">Add to calendar</p>
+            <div class="cal-buttons">
+              <a class="cal-btn"
+                 href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Save+the+Date+%E2%80%94+Jeffrey+%26+Victoria&dates=20270725/20270726&details=Formal+invitation+to+follow.&location=Sea+Cliff+Manor"
+                 target="_blank" rel="noopener"
+                 onclick="event.stopPropagation()">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                  <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                Google
+              </a>
+              <a class="cal-btn"
+                 href="https://outlook.live.com/calendar/0/action/compose?rru=addevent&startdt=2027-07-25&enddt=2027-07-26&subject=Save%20the%20Date%20%E2%80%94%20Jeffrey%20%26%20Victoria&body=Formal%20invitation%20to%20follow.&location=Sea%20Cliff%20Manor&allday=true"
+                 target="_blank" rel="noopener"
+                 onclick="event.stopPropagation()">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                  <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                Outlook
+              </a>
+              <button class="cal-btn" onclick="event.stopPropagation(); downloadICS()">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect x="0.6" y="1.6" width="11.8" height="10.8" rx="1.4" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="0.6" y1="5" x2="12.4" y2="5" stroke="currentColor" stroke-width="1.1"/>
+                  <line x1="3.5" y1="0.5" x2="3.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                  <line x1="9.5" y1="0.5" x2="9.5" y2="2.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                Apple
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="m-hint" id="mHint">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+        <path d="M11 6.5C11 9 9 11 6.5 11C4 11 2 9 2 6.5C2 4 4 2 6.5 2H9.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="M9.5 2L8 0.5L11 0.5L11 3.5L9.5 2Z" fill="currentColor"/>
+      </svg>
+      tap to flip
+    </p>
+  </div>
+
+  <script>
+    function flipMobileCard() {
+      const inner = document.getElementById('mFlipInner');
+      const hint  = document.getElementById('mHint');
+      inner.classList.toggle('is-flipped');
+      hint.classList.toggle('hidden', inner.classList.contains('is-flipped'));
+    }
+
+    function downloadICS() {
+      const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Jeffrey & Victoria//Save the Date//EN',
+        'BEGIN:VEVENT',
+        'DTSTART;VALUE=DATE:20270725',
+        'DTEND;VALUE=DATE:20270726',
+        'SUMMARY:Save the Date — Jeffrey Wong & Victoria Cheng',
+        'LOCATION:Sea Cliff Manor',
+        'DESCRIPTION:Formal invitation to follow.',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([lines], { type: 'text/calendar;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.download = 'jeffrey-and-victoria.ics';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
