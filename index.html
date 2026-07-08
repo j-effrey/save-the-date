@@ -259,19 +259,7 @@
         text-transform: uppercase;
         color: rgba(0, 0, 0, 0.55);
         opacity: 0;
-        transition: opacity 0.5s ease;
-        animation: apart-fade 0.8s ease-in-out 2.0s both, m-hint-pulse 3.2s ease-in-out 2.8s infinite;
-      }
-
-      .m-hint.hidden {
-        opacity: 0;
-        pointer-events: none;
-        animation: none;
-      }
-
-      @keyframes m-hint-pulse {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0.4; }
+        animation: apart-fade 0.8s ease-in-out 1.5s both;
       }
     }
   </style>
@@ -391,7 +379,10 @@
       const hint  = document.getElementById('mHint');
       card.style.pointerEvents = 'none';
       inner.classList.toggle('is-flipped');
-      hint.classList.toggle('hidden', inner.classList.contains('is-flipped'));
+      const isNowFlipped = inner.classList.contains('is-flipped');
+      hint.style.animation = 'none';
+      hint.style.transition = isNowFlipped ? 'opacity 0.3s ease' : 'opacity 0.15s ease';
+      hint.style.opacity = isNowFlipped ? '0' : '1';
       setTimeout(() => { card.style.pointerEvents = ''; }, 900);
     }
 
