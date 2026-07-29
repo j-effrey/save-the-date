@@ -1,0 +1,74 @@
+@mode light
+@columns onecolumn
+@fonts roboto
+@themes classic
+
+Biology teacher with four years of experience communicating with students, parents, and colleagues, resolving day-to-day issues, and keeping multiple courses organized. Comfortable working with a wide range of people and determining when to handle something directly versus escalating it to a supervisor. Interested in bringing that same reliability to a retail environment.
+
+#section1 Relevant Skills
+
+#title Customer Service & Communication
+- Communicate daily with students, parents, and colleagues, explaining information clearly and resolving concerns as they arise
+- Determine when to resolve an issue directly versus escalating it to a supervisor or administrator
+
+#title Organization & Teamwork
+- Manage materials, schedules, and classroom space across multiple courses at once
+- Collaborate with department colleagues to plan lessons and troubleshoot issues together
+- Built a new elective course from the ground up, including curriculum, lessons, and assessments
+
+#section2 Education
+
+#title M.A in Teaching, Adolescent Biology Grades 7-12
+#subtitle CUNY Hunter College School of Education
+#date 2021 - 2023
+
+#title B.A. in Medicine, Science and the Humanities
+#subtitle Johns Hopkins University
+#date 2017 - 2020
+
+#section1 Experience
+
+#title Biology Teacher, New York City Department of Education
+#subtitle Brooklyn Technical High School
+#date 08/2023 - Present
+- Communicate daily with students and parents, resolving concerns directly or escalating to administration when appropriate
+- Collaborate with department colleagues during Common Planning to coordinate lessons and share resources
+- Developed the Bioorganic Chemistry elective from the ground up during its pilot year, including curriculum, lessons, and assessments
+- Manage materials and organization across three concurrent courses (AP Biology, AP Psychology, Bioorganic Chemistry)
+
+#title Substitute Teacher, New York City Department of Education
+#subtitle Brooklyn Technical High School
+#date 01/2022 - 02/2023
+- Took over a long-term ELA placement for 150+ students on short notice, managing all instruction, planning, and grading
+- Took over a separate long-term placement for 90+ AP Biology and Living Environment students, stepping into an existing curriculum mid-year
+
+#title Private Tutor
+#date 10/2020 - 06/2024
+- Tutored students one-on-one and in small groups, working directly with them and their families
+- Scheduled and led sessions for students in grades 3-12 across a range of subjects and standardized tests
+- Coordinated standardized test prep classes, including materials and scheduling for multiple students at a time
+
+#section1 Volunteering
+
+#title Johns Hopkins Hospital
+#subtitle Infants, Toddlers, and Preschool Child Life Volunteer; Pediatric Emergency Department Volunteer
+#date 05/2019 - 05/2020
+- Worked directly with patients and families to make a stressful environment feel more normal and welcoming
+- Assisted the head nurse with clerical and day-to-day support tasks to help the department run smoothly
+- Checked in regularly with patients and families to monitor their experience and flag any concerns
+
+#title First Year Mentor
+#subtitle Johns Hopkins University Office of Multicultural Affairs
+#date 05/2018 - 05/2020
+- Organized monthly programs for mentees and connected incoming students to campus resources and a peer network
+
+#section1 Activities
+
+#title Club Advisor
+#date 09/2023 - Present
+#subtitle BTHS Science Bowl, BTHS Chinese Culture Association, BTHS Medical Journal, BTHS Cats, Surgeon Club, Jeopardy Club
+
+#header Victoria Cheng
+
+vcheng@schools.nyc.gov
+New York, NY
