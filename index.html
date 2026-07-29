@@ -199,21 +199,52 @@
       }
 
       .m-back {
+        position: absolute;
+        inset: 0;
         transform: rotateY(180deg) translateZ(1px);
-        box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.14);
+        display: flex;
+        flex-direction: column;
       }
 
-      .m-back img {
+      .m-back-top,
+      .m-back-bot {
+        position: relative;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
         display: block;
+        transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .m-back-top {
+        order: -1;
+      }
+
+      .m-flip-inner.is-flipped .m-back-top {
+        animation: m-back-top-move 2.0s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+      }
+
+      .m-flip-inner.is-flipped .m-back-bot {
+        animation: m-back-bot-move 2.0s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
+      }
+
+      @keyframes m-back-top-move {
+        from { transform: translateX(0) rotateZ(0deg); }
+        to { transform: translateX(-32px) rotateZ(-6deg); }
+      }
+
+      @keyframes m-back-bot-move {
+        from { transform: translateX(0) rotateZ(0deg); }
+        to { transform: translateX(32px) rotateZ(6deg); }
+      }
+
+      .m-flip-inner.is-flipped .m-cal-overlay {
+        animation: m-back-top-move 2.0s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
       }
 
       /* Calendar overlay on the blank top portion of cardback.jpg (~46%) */
       .m-cal-overlay {
         position: absolute;
-        top: 30%;
+        top: 14%;
         left: 0;
         width: 100%;
         transform: translateY(-50%);
@@ -223,6 +254,7 @@
         gap: 9px;
         padding: 0 20px;
         z-index: 1;
+        transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .m-cal-overlay .cal-label {
@@ -319,7 +351,8 @@
         </div>
 
         <div class="m-back">
-          <img src="cardback.jpg" alt="Jeffrey and Victoria">
+          <img class="m-back-top" src="cardbacktop.jpg" alt="Jeffrey and Victoria">
+          <img class="m-back-bot" src="cardbackbot.jpg" alt="">
           <div class="m-cal-overlay">
             <p class="cal-label">Add to calendar</p>
             <div class="cal-buttons">
@@ -377,12 +410,39 @@
       const inner = document.getElementById('mFlipInner');
       const card  = inner.parentElement;
       const hint  = document.getElementById('mHint');
+      const backTop = inner.querySelector('.m-back-top');
+      const backBot = inner.querySelector('.m-back-bot');
+      const calOverlay = inner.querySelector('.m-cal-overlay');
+
       card.style.pointerEvents = 'none';
-      inner.classList.toggle('is-flipped');
-      const isNowFlipped = inner.classList.contains('is-flipped');
+      const isFlipped = inner.classList.contains('is-flipped');
+
+      if (!isFlipped) {
+        // Flipping to back: clear frozen styles (while back is hidden)
+        // so the split animation replays from the start.
+        [backTop, backBot, calOverlay].forEach(el => {
+          el.style.transition = 'none';
+          el.style.animation = '';
+          el.style.transform = '';
+        });
+        inner.classList.add('is-flipped');
+      } else {
+        // Flipping to front: freeze the separated end state as inline
+        // styles so the back stays exactly as-is during the flip.
+        backTop.style.transform = 'translateX(-32px) rotateZ(-6deg)';
+        backBot.style.transform = 'translateX(32px) rotateZ(6deg)';
+        calOverlay.style.transform = 'translateX(-32px) rotateZ(-6deg)';
+        [backTop, backBot, calOverlay].forEach(el => {
+          el.style.transition = 'none';
+          el.style.animation = 'none';
+        });
+        inner.classList.remove('is-flipped');
+      }
+
       hint.style.animation = 'none';
-      hint.style.transition = isNowFlipped ? 'opacity 0.3s ease' : 'opacity 0.15s ease';
-      hint.style.opacity = isNowFlipped ? '0' : '1';
+      hint.style.transition = isFlipped ? 'opacity 0.15s ease' : 'opacity 0.3s ease';
+      hint.style.opacity = isFlipped ? '1' : '0';
+
       setTimeout(() => { card.style.pointerEvents = ''; }, 900);
     }
 
