@@ -398,19 +398,22 @@
   (function () {
     var url = new URL('https://calendar.google.com/calendar/render');
     url.searchParams.set('action', 'TEMPLATE');
-    url.searchParams.set('text', "Jeffrey & Victoria's Wedding");
-    url.searchParams.set('dates', '20270725T120000Z/20270726T000000Z');
-    url.searchParams.set('details', "Save the Date! Jeffrey & Victoria are getting married. More details to follow.");
+    url.searchParams.set('text', "Jeffrey & Victoria's Wedding!");
+    url.searchParams.set('dates', '20270725/20270726');
+    url.searchParams.set('details', 'Formal invitation to follow.');
+    url.searchParams.set('location', '395 Prospect Ave, Sea Cliff, NY 11579');
     document.getElementById('btn-gcal').href = url.toString();
   })();
 
   // Outlook Web
   (function () {
     var url = new URL('https://outlook.live.com/calendar/0/deeplink/compose');
-    url.searchParams.set('subject', "Jeffrey & Victoria's Wedding");
-    url.searchParams.set('startdt', '2027-07-25T12:00:00');
-    url.searchParams.set('enddt',   '2027-07-26T00:00:00');
-    url.searchParams.set('body',    "Save the Date! Jeffrey & Victoria are getting married. More details to follow.");
+    url.searchParams.set('subject', "Jeffrey & Victoria's Wedding!");
+    url.searchParams.set('startdt', '2027-07-25');
+    url.searchParams.set('enddt',   '2027-07-26');
+    url.searchParams.set('body',    'Formal invitation to follow.');
+    url.searchParams.set('location', '395 Prospect Ave, Sea Cliff, NY 11579');
+    url.searchParams.set('allday',  'true');
     url.searchParams.set('path',    '/calendar/action/compose');
     url.searchParams.set('rru',     'addevent');
     document.getElementById('btn-outlook').href = url.toString();
@@ -425,10 +428,11 @@
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
       'BEGIN:VEVENT',
-      'DTSTART:20270725T120000Z',
-      'DTEND:20270726T000000Z',
-      'SUMMARY:Jeffrey & Victoria\'s Wedding',
-      'DESCRIPTION:Save the Date! Jeffrey & Victoria are getting married.\\nMore details to follow.',
+      'DTSTART;VALUE=DATE:20270725',
+      'DTEND;VALUE=DATE:20270726',
+      'SUMMARY:Jeffrey & Victoria\'s Wedding!',
+      'LOCATION:395 Prospect Ave\\, Sea Cliff\\, NY 11579',
+      'DESCRIPTION:Formal invitation to follow.',
       'STATUS:CONFIRMED',
       'TRANSP:OPAQUE',
       'END:VEVENT',

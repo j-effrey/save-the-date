@@ -9,9 +9,9 @@ DTSTAMP:20260804T120000Z
 DTSTART;VALUE=DATE:20270725
 DTEND;VALUE=DATE:20270726
 SUMMARY:Jeffrey & Victoria's
- Wedding
-DESCRIPTION:Save the Date! Jeffrey and Victoria are getting married.
- More details to follow.
+  Wedding!
+LOCATION:395 Prospect Ave\, Sea Cliff\, NY 11579
+DESCRIPTION:Formal invitation to follow.
 STATUS:CONFIRMED
 TRANSP:OPAQUE
 END:VEVENT
